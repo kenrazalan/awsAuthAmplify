@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "AmplifyPets",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authawsauthamplify2f2c5b99",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2023-02-04T06:06:49.056Z"
+}

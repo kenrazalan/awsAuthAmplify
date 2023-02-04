@@ -1,24 +1,41 @@
-import logo from "./logo.svg";
 import "@aws-amplify/ui-react/styles.css";
-import {
-  withAuthenticator,
-  Button,
-  Heading,
-  Image,
-  View,
-  Card,
-} from "@aws-amplify/ui-react";
+import { Authenticator } from "@aws-amplify/ui-react";
+import Main from "./Main";
+import { Header, Container, Button, Text } from "@mantine/core";
+import { useStyles } from "./utils";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import PostLists from "./components/PostLists";
 
-function App({ signOut }) {
+function App() {
+  const { classes } = useStyles();
   return (
-    <View className="App">
-      <Card>
-        <Image src={logo} className="App-logo" alt="logo" />
-        <Heading level={1}>We now have Auth!</Heading>
-      </Card>
-      <Button onClick={signOut}>Sign Out</Button>
-    </View>
+    <Router>
+      <Header height={60} mb={120}>
+        <Container className={classes.header}>
+          <Link to={"/"}>
+            <Text weight={"bold"}>Home</Text>
+          </Link>
+          <Link to="/posts">
+            <Text weight={"bold"}>Posts (No Auth)</Text>
+          </Link>
+        </Container>
+      </Header>
+
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <Authenticator>
+              {({ signOut, user }) => <Main signOut={signOut} user={user} />}
+            </Authenticator>
+          }
+        />
+
+        <Route path="/posts" element={<PostLists />} />
+      </Routes>
+    </Router>
   );
 }
 
-export default withAuthenticator(App);
+export default App;
