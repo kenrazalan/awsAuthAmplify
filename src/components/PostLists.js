@@ -42,6 +42,7 @@ function PostLists() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const postsData = await API.graphql({
         query: listPosts,
         authMode: "API_KEY",
@@ -49,6 +50,7 @@ function PostLists() {
 
       console.log(postsData, "postsData");
       setPosts(postsData.data.listPosts.items);
+      setLoading(false);
     };
 
     fetchData();
@@ -136,7 +138,7 @@ function PostLists() {
       {loading && (
         <>
           {Array.from(Array(3).keys()).map((item, i) => (
-            <Skeleton visible={true} height={40} key={i}></Skeleton>
+            <Skeleton my={"sm"} visible={true} height={150} key={i}></Skeleton>
           ))}
         </>
       )}
